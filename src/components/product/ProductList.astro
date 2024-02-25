@@ -1,0 +1,17 @@
+---
+import productsData from "@/data/products.ts";
+
+import ProductCard from "./ProductCard.astro";
+---
+
+<section class="products">
+  {productsData.map((product) => <ProductCard data={product} />)}
+</section>
+
+<style lang="scss">
+  .products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+</style>

@@ -1,0 +1,28 @@
+---
+import productsData from "@/data/products.ts";
+
+import Letitgo from "@/layouts/Letitgo.astro";
+
+export async function getStaticPaths() {
+  const pages = productsData;
+
+  return pages.map(({ code, name, description, price, image }) => {
+    return {
+      params: { product: code },
+      props: { code, name, description, price, image },
+    };
+  });
+}
+
+const { code, name, description, price, image } = Astro.props;
+---
+
+<Letitgo title={name + " – letitgo"}>
+  <article transition:name={code}>
+    <h1>{name}</h1>
+
+    <div class="code">Артикул: {code}</div>
+    <div class="description">Описание: {description}</div>
+    <div class="price">Цена: {price}₽</div>
+  </article>
+</Letitgo>

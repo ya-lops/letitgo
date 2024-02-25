@@ -1,0 +1,21 @@
+{
+  "name": "letitgo",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/alpinejs": "^0.4.0",
+    "@types/alpinejs": "^3.13.6",
+    "alpinejs": "^3.13.5",
+    "astro": "^4.4.4",
+    "prettier": "^3.2.5",
+    "prettier-plugin-astro": "^0.13.0",
+    "sass": "^1.71.1"
+  }
+}

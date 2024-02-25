@@ -1,0 +1,28 @@
+---
+import { ViewTransitions } from 'astro:transitions';
+
+const { title = "letitgo - украшения ручной работы" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <ViewTransitions />
+  </head>
+  <body>
+    <div class="container">
+      <slot />
+    </div>
+  </body>
+</html>
+
+<style lang="scss" is:global>
+  .container {
+    width: 100%;
+    max-width: 960px;
+    margin-inline: auto;
+  }
+</style>

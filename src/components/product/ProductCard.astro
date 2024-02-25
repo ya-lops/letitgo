@@ -1,0 +1,21 @@
+---
+const url = "/";
+
+const { data } = Astro.props;
+---
+
+<div class="product">
+  <div class="inner" transition:name={data.code}>
+    <div class="name">{data.name}</div>
+    <div class="code">Артикул: {data.code}</div>
+    <div class="description">Описание: {data.description}</div>
+    <div class="price">Цена: {data.price}₽</div>
+    <a href={url + data.code}>Посмотреть</a>
+  </div>
+</div>
+
+<style>
+  .product {
+    border: 1px solid black;
+  }
+</style>
