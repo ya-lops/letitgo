@@ -4,12 +4,18 @@ import urls from "@/data/urls.ts";
 import ProductToCartBtn from "@/components/product/ProductToCartBtn.astro";
 
 const { productData } = Astro.props;
+
+// Get product images
+const images = import.meta.glob('/src/images/product/*', { eager: true });
+const imagesProps = Object.values(images).map(image => image.default);
+const productImages = imagesProps.filter(image => image.src.includes(productData.code));
+
 ---
 
 <div class="product">
   <div class="inner" transition:name={productData.code}>
     <div class="image">
-      <img src=`/images/product/${productData.code}-1.jpg` alt=""/>
+      <img src={productImages[0].src} alt=""/>
     </div>
     <div class="name">{productData.name}</div>
     <div class="code">Артикул: {productData.code}</div>

@@ -26,7 +26,7 @@ const { code, name, description, price, imageCount } = Astro.props;
   <article transition:name={code}>
     <h1>{name}</h1>
     <div class="image">
-      <ProductPhotos code={code} count={imageCount} />
+      <ProductPhotos code={code} />
     </div>
     <div class="code">Артикул: {code}</div>
     <div class="description">Описание: {description}</div>

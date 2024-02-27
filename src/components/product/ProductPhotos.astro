@@ -1,23 +1,20 @@
 ---
 interface Props {
   code: string;
-  count: any;
 }
 
-const { code, count } = Astro.props;
+const { code } = Astro.props;
+
+// Get product images
+const images = import.meta.glob('/src/images/product/*', { eager: true });
+const imagesProps = Object.values(images).map(image => image.default);
+const productImages = imagesProps.filter(image => image.src.includes(code));
 ---
 
 <div class="product-photos">
-  {
-    Array(count)
-      .fill(null)
-      .map((_, i) => ++i)
-      .map((i) => (
-        <div class="photo">
-          <img src={"/images/product/" + code + "-" + i + ".jpg"} alt="" />
-        </div>
-      ))
-  }
+  {productImages.map(image => (
+    <img src={image.src} alt="" width={image.width} height={image.height} loading="lazy"/>
+  ) )}
 </div>
 
 <style lang="scss">
