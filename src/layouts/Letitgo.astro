@@ -1,6 +1,8 @@
 ---
-import { ViewTransitions } from "astro:transitions";
+import "@/styles/index.scss";
 
+import { ViewTransitions } from "astro:transitions";
+import ExternalFonts from "@/components/ExternalFonts.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 
@@ -14,10 +16,11 @@ const { title = "letitgo - украшения ручной работы" } = Ast
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <ViewTransitions />
+    <ExternalFonts/>
   </head>
-  <body>
+  <body class="letitgo" x-data="letitgo()">
     <Header />
-    <main x-data="letitgo()">
+    <main>
       <div class="container">
         <slot />
       </div>
@@ -25,14 +28,6 @@ const { title = "letitgo - украшения ручной работы" } = Ast
     <Footer />
   </body>
 </html>
-
-<style lang="scss" is:global>
-  .container {
-    width: 100%;
-    max-width: 960px;
-    margin-inline: auto;
-  }
-</style>
 
 <script is:inline>
   document.addEventListener("alpine:init", () => {

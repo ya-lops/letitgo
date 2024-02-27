@@ -1,4 +1,6 @@
 ---
+import DotsSpinner from "@/components/icon/DotsSpinner.astro";
+
 const { code, name, price } = Astro.props;
 ---
 
@@ -10,4 +12,7 @@ const { code, name, price } = Astro.props;
   data-price={price}
   x-data="product()"
   @click=`toCart()`
-  x-text="btnLabel"></button>
+  x-text="btnLabel"
+>
+  <DotsSpinner />
+</button>

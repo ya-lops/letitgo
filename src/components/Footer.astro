@@ -1,7 +1,42 @@
 ---
-
+import SocialLinks from "@/components/partial/SocialLinks.astro";
 ---
 
 <footer class="footer">
-  2024. letitgo
+  <div class="container">
+    <div class="content">
+      <div class="dev">
+        Разработка: <a href="https://vk.com/monikossa" rel="nofollow"
+          >monikossa</a
+        >
+      </div>
+      <div class="copy">© letitgo | 2024</div>
+
+      <div class="links">
+        <SocialLinks />
+      </div>
+    </div>
+  </div>
 </footer>
+
+<style lang="scss">
+  .footer {
+    padding: 3rem;
+    color: var(--color-text-primary-inverse);
+  }
+
+  .content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .dev,
+  .copy {
+    font-size: 0.75rem;
+  }
+
+  .links {
+    font-size: 2rem;
+  }
+</style>

@@ -1,37 +1,37 @@
 ---
 import productsData from "@/data/products.ts";
-import urls from "@/data/urls.ts"
+import urls from "@/data/urls.ts";
 
 import Letitgo from "@/layouts/Letitgo.astro";
+import ProductPhotos from "@/components/product/ProductPhotos.astro";
 import ProductToCartBtn from "@/components/product/ProductToCartBtn.astro";
 
 export async function getStaticPaths() {
   const pages = productsData;
-  
-  return pages.map(( props = { id: 1, code, name, description, price, image }) => {
-    return {
-      params: { product: urls.product + props.code },
-      props: props,
-    };
-  });
+
+  return pages.map(
+    (props = { id: 1, code, name, description, price, imageCount }) => {
+      return {
+        params: { product: urls.product + props.code },
+        props: props,
+      };
+    },
+  );
 }
 
-const { code, name, description, price, image } = Astro.props;
+const { code, name, description, price, imageCount } = Astro.props;
 ---
 
 <Letitgo title={name + " – letitgo"}>
   <article transition:name={code}>
     <h1>{name}</h1>
     <div class="image">
-      {image.length ?
-        <div>Есть изображение</div>
-        :
-        <div>Нет изображения</div>
-      }
+      <ProductPhotos code={code} count={imageCount} />
     </div>
     <div class="code">Артикул: {code}</div>
     <div class="description">Описание: {description}</div>
     <div class="price">Цена: {price}₽</div>
-    <ProductToCartBtn code={code} name={name} price={price}/>
+
+    <ProductToCartBtn code={code} name={name} price={price} />
   </article>
 </Letitgo>

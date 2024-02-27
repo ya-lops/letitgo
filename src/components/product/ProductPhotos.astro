@@ -1,0 +1,29 @@
+---
+interface Props {
+  code: string;
+  count: any;
+}
+
+const { code, count } = Astro.props;
+---
+
+<div class="product-photos">
+  {
+    Array(count)
+      .fill(null)
+      .map((_, i) => ++i)
+      .map((i) => (
+        <div class="photo">
+          <img src={"/images/product/" + code + "-" + i + ".jpg"} alt="" />
+        </div>
+      ))
+  }
+</div>
+
+<style lang="scss">
+  .product-photos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+  }
+</style>

@@ -1,0 +1,28 @@
+body {
+  min-height: 100dvh;
+  background: linear-gradient(60deg, var(--color-surface-0), var(--color-surface-1));
+  color: var(--color-text-primary, #000);
+  font-family: var(--font-family-primary);
+  font-size: var(--fz-body, 1rem);
+  line-height: 1.25;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: clip;
+}
+
+.letitgo {
+  display: grid;
+  grid-template-rows: auto minmax(0,1fr) auto;
+}
+
+.container {
+  width: 100%;
+  max-width: 960px;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}

@@ -1,7 +1,23 @@
 ---
-
+import Logo from "@/components/partial/Logo.astro";
 ---
 
 <header class="header">
-  
+  <div class="container">
+    <div class="logo">
+      <Logo />
+    </div>
+  </div>
 </header>
+
+<style lang="scss">
+  .header {
+    padding: 3rem;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>

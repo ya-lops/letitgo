@@ -8,6 +8,9 @@ const { productData } = Astro.props;
 
 <div class="product">
   <div class="inner" transition:name={productData.code}>
+    <div class="image">
+      <img src=`/images/product/${productData.code}-1.jpg` alt=""/>
+    </div>
     <div class="name">{productData.name}</div>
     <div class="code">Артикул: {productData.code}</div>
     <div class="description">Описание: {productData.description}</div>

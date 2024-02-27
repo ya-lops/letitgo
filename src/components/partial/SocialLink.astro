@@ -1,0 +1,34 @@
+---
+interface Props {
+  href: string;
+  rel?: string;
+}
+
+const {href, rel} = Astro.props;
+---
+<a class="social-link" href={href} target="_blank">
+  <slot/>
+</a>
+
+<style lang="scss">
+  .social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 24px;
+    max-height: 24px;
+    aspect-ratio: 1;
+    will-change: scale;
+    transition: scale .25s;
+
+    :global(svg) {
+      height: 100%;
+      width: 100%;
+      object-fit: contain;
+    }
+
+    &:hover {
+      scale: 1.25;
+    }
+  }
+</style>

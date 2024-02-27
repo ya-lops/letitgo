@@ -1,0 +1,23 @@
+---
+import SocialLink from "@/components/partial/SocialLink.astro";
+import VkIcon from "@/components/icon/VkIcon.astro";
+import InstagramIcon from "@/components/icon/InstagramIcon.astro";
+---
+
+<div class="social-links">
+  <SocialLink href="https://vk.com/letitgo12">
+    <VkIcon />
+  </SocialLink>
+
+  <SocialLink href="#instagram">
+    <InstagramIcon />
+  </SocialLink>
+</div>
+
+<style lang="scss">
+  .social-links {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+</style>
