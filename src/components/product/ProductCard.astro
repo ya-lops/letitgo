@@ -1,21 +1,19 @@
 ---
-const url = "/";
+import urls from "@/data/urls.ts";
 
-const { data } = Astro.props;
+import ProductToCartBtn from "@/components/product/ProductToCartBtn.astro";
+
+const { productData } = Astro.props;
 ---
 
 <div class="product">
-  <div class="inner" transition:name={data.code}>
-    <div class="name">{data.name}</div>
-    <div class="code">Артикул: {data.code}</div>
-    <div class="description">Описание: {data.description}</div>
-    <div class="price">Цена: {data.price}₽</div>
-    <a href={url + data.code}>Посмотреть</a>
+  <div class="inner" transition:name={productData.code}>
+    <div class="name">{productData.name}</div>
+    <div class="code">Артикул: {productData.code}</div>
+    <div class="description">Описание: {productData.description}</div>
+    <div class="price">Цена: {productData.price}₽</div>
+    <a href={urls.product + productData.code}>Посмотреть</a>
+
+    <ProductToCartBtn code={productData.code} name={productData.name} price={productData.price}/>
   </div>
 </div>
-
-<style>
-  .product {
-    border: 1px solid black;
-  }
-</style>

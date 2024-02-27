@@ -1,4 +1,4 @@
-import { defineConfig } from 'astro/config';
+import { defineConfig } from "astro/config";
 
 import alpinejs from "@astrojs/alpinejs";
 
@@ -7,12 +7,15 @@ export default defineConfig({
   compressHTML: true,
   build: {
     assets: "assets",
-    inlineStylesheets: "never"
+    inlineStylesheets: "never",
+  },
+  redirects: {
+    "/product": "/",
   },
   integrations: [alpinejs()],
   vite: {
     css: {
-      devSourcemap: true
-    }
-  }
+      devSourcemap: true,
+    },
+  },
 });

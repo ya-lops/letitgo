@@ -1,0 +1,31 @@
+---
+
+---
+
+<section x-data="cart()" class="cart">
+  <header class="cart-header">
+    <h1 x-text="label">Загрузка</h1>
+  </header>
+  <div class="cart-headings _row">
+    <span>Название</span>
+    <span>Артикул</span>
+    <span>Цена</span>
+  </div>
+  <template x-for="product in products">
+    <div class="cart-item _row">
+      <span x-text="product.name"></span>
+      <span x-text="product.code"></span>
+      <span x-text="product.price + '₽'"></span>
+    </div>
+    
+  </template>
+
+  <button @click=`clearCart()`>Очистить корзину</button>
+</section>
+
+<style lang="scss">
+  ._row {
+    display: grid;
+    grid-template-columns: minmax(0,2fr) minmax(0,.5fr) minmax(0,1fr);
+  }
+</style>
