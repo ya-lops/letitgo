@@ -44,7 +44,7 @@ const { title = "letitgo - украшения ручной работы", descri
   });
 
   function letitgo() {
-    console.log('letitgo is running')
+    // console.log('letitgo is running')
     items = JSON.parse(localStorage.shoppingCart || '[]');
     Alpine.store('cart', items);
 
@@ -66,7 +66,7 @@ const { title = "letitgo - украшения ручной работы", descri
             else {
               this.inCart = false;
             }
-            console.log("product loaded");
+            // console.log("product loaded");
           },
 
           toCart() {
@@ -74,6 +74,7 @@ const { title = "letitgo - украшения ручной работы", descri
             product.code = this.$el.dataset.code;
             product.name = this.$el.dataset.name;
             product.price = this.$el.dataset.price;
+            product.image = this.$el.dataset.image;
 
             if (!Alpine.store('cart').some(e => e.code === product.code)) {
               this.inCart = true
@@ -81,8 +82,9 @@ const { title = "letitgo - украшения ручной работы", descri
               items.push(product);
               localStorage.setItem('shoppingCart', JSON.stringify(items));
               Alpine.store('cart', items);
-              console.log('Product ' + product + ' added');
-              console.log(Alpine.store('cart'));
+              // console.log('Product ' + product + ' added');
+              // console.log(Alpine.store('cart'));
+              // console.log(product)
             }
           },
         };
@@ -93,7 +95,7 @@ const { title = "letitgo - украшения ручной работы", descri
           init() {
             label = "Корзина"
             products = items;
-            console.log('cart loaded');
+            // console.log('cart loaded');
           }
         }
       },
@@ -102,7 +104,7 @@ const { title = "letitgo - украшения ручной работы", descri
         items = [];
         localStorage.setItem('shoppingCart', []);
         Alpine.store('cart', []);
-        console.log('clearCart done')
+        // console.log('clearCart done')
       }
     }
   }

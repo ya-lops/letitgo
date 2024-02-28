@@ -1,31 +1,36 @@
 ---
-
+import CartClearBtn from "@/components/cart/CartClearBtn.astro";
+import CartOrderForm from "@/components/cart/CartOrderForm.astro";
 ---
 
-<section x-data="cart()" class="cart">
-  <header class="cart-header">
+<article x-data="cart()" class="cart">
+  <header class="cart__header">
     <h1 x-text="label">Загрузка</h1>
   </header>
-  <div class="cart-headings _row">
+  <div class="cart__headings _row">
     <span>Название</span>
     <span>Артикул</span>
     <span>Цена</span>
   </div>
   <template x-for="product in products">
-    <div class="cart-item _row">
+    <div class="cart__item _row">
+      <img x-bind:src="product.image"/>
       <span x-text="product.name"></span>
       <span x-text="product.code"></span>
       <span x-text="product.price + '₽'"></span>
     </div>
-    
   </template>
+  
+  <CartClearBtn>Очистить корзину</CartClearBtn>
 
-  <button @click=`clearCart()`>Очистить корзину</button>
-</section>
+  <!-- btn - оформить заказ -->
+  <!-- form - оформление заказа -->
+  
+</article>
 
 <style lang="scss">
   ._row {
     display: grid;
-    grid-template-columns: minmax(0,2fr) minmax(0,.5fr) minmax(0,1fr);
+    grid-template-columns: auto minmax(0,2fr) minmax(0,.5fr) minmax(0,1fr);
   }
 </style>

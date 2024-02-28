@@ -24,7 +24,7 @@ const productImages = getProductImagesByCode(p.code);
   </a>
 
   <div class="productCard__actionBuy">
-    <ProductToCartBtn code={p.code} name={p.name} price={p.price} />
+    <ProductToCartBtn code={p.code} name={p.name} price={p.price} image={productImages[0].src} />
   </div>
 </div>
 
