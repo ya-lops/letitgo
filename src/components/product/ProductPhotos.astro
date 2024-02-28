@@ -3,18 +3,22 @@ interface Props {
   code: string;
 }
 
+import { Image } from "astro:assets";
+import getProductImagesByCode from "@/utils/getImages";
+
 const { code } = Astro.props;
 
-// Get product images
-const images = import.meta.glob('/src/images/product/*', { eager: true });
-const imagesProps = Object.values(images).map(image => image.default);
-const productImages = imagesProps.filter(image => image.src.includes(code));
+const productImages = getProductImagesByCode(code);
 ---
 
 <div class="product-photos">
-  {productImages.map(image => (
-    <img src={image.src} alt="" width={image.width} height={image.height} loading="lazy"/>
-  ) )}
+  {
+    productImages.map((image) => (
+      <div class="photo">
+        <Image src={image} alt="" decoding="auto" />
+      </div>
+    ))
+  }
 </div>
 
 <style lang="scss">

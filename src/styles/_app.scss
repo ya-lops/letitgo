@@ -1,7 +1,7 @@
 body {
   min-height: 100dvh;
-  background: linear-gradient(60deg, var(--color-surface-0), var(--color-surface-1));
-  color: var(--color-text-primary, #000);
+  background: hsl(42, 45%, 95%);
+  color: var(--color-text-primary);
   font-family: var(--font-family-primary);
   font-size: var(--fz-body, 1rem);
   line-height: 1.25;
@@ -13,6 +13,7 @@ body {
 .letitgo {
   display: grid;
   grid-template-rows: auto minmax(0,1fr) auto;
+  gap: 2rem;
 }
 
 .container {
@@ -25,4 +26,11 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+.\+hidden {
+  opacity: 0;
+  visibility: hidden;
+  height: 0;
+  overflow: clip;
 }

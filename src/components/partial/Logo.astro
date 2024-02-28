@@ -12,18 +12,21 @@
 <style lang="scss">
   .logo {
     display: flex;
-    flex-flow: column;
+    flex-flow: row;
     align-items: center;
+    gap: 1rem;
   }
 
   .icon {
     img {
+      height: 3rem;
+      filter: brightness(0);
       user-select: none;
     }
   }
 
   .text {
-    color: var(--color-text-primary-inverse);
+    color: var(--color-text-primary);
     font-size: 3rem;
     font-family: var(--font-family-logo);
     will-change: scale;

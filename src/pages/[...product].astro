@@ -22,16 +22,44 @@ export async function getStaticPaths() {
 const { code, name, description, price, imageCount } = Astro.props;
 ---
 
-<Letitgo title={name + " – letitgo"}>
-  <article transition:name={code}>
-    <h1>{name}</h1>
-    <div class="image">
+<Letitgo page="product" title={name + " – letitgo"}>
+  <article class="product" transition:name={code}>
+    <header>
+      <h1 class="product__title">{name}</h1>
+    </header>
+    <div class="product__image">
       <ProductPhotos code={code} />
     </div>
-    <div class="code">Артикул: {code}</div>
-    <div class="description">Описание: {description}</div>
-    <div class="price">Цена: {price}₽</div>
-
-    <ProductToCartBtn code={code} name={name} price={price} />
+    <div class="product__code">Артикул: {code}</div>
+    <div class="product__description">Описание: {description}</div>
+    <div class="product__price">Цена: {price}₽</div>
+    <div class="product__actionBuy">
+      <ProductToCartBtn code={code} name={name} price={price} />
+    </div>
   </article>
+
+  <!-- Здесь блок аналогичных товаров (той же категории) -->
+
 </Letitgo>
+
+<style lang="scss">
+  .product {
+    &__title {
+    }
+
+    &__image {
+    }
+
+    &__code {
+    }
+
+    &__description {
+    }
+
+    &__price {
+    }
+
+    &__actionBuy {
+    }
+  }
+</style>

@@ -1,28 +1,119 @@
 ---
-import urls from "@/data/urls.ts";
+import urls from "@/data/urls";
+import getProductImagesByCode from "@/utils/getImages";
 
+import { Image } from "astro:assets";
 import ProductToCartBtn from "@/components/product/ProductToCartBtn.astro";
 
-const { productData } = Astro.props;
+const { productData, p = productData } = Astro.props;
 
-// Get product images
-const images = import.meta.glob('/src/images/product/*', { eager: true });
-const imagesProps = Object.values(images).map(image => image.default);
-const productImages = imagesProps.filter(image => image.src.includes(productData.code));
-
+const productImages = getProductImagesByCode(p.code);
 ---
 
-<div class="product">
-  <div class="inner" transition:name={productData.code}>
-    <div class="image">
-      <img src={productImages[0].src} alt=""/>
+<div class="productCard">
+  <a class="productCard__inner" href={urls.product + p.code} transition:name={p.code}>
+    <div class="productCard__image">
+      <Image src={productImages[0]} alt="" quality="mid" decoding="auto" />
     </div>
-    <div class="name">{productData.name}</div>
-    <div class="code">Артикул: {productData.code}</div>
-    <div class="description">Описание: {productData.description}</div>
-    <div class="price">Цена: {productData.price}₽</div>
-    <a href={urls.product + productData.code}>Посмотреть</a>
+    <div class="productCard__name">
+      <p class="_name">{p.name}</p>
+      <p class="_price">= {p.price}₽</p>
+    </div>
+    <div class="productCard__code">Артикул: {p.code}</div>
+    <div class="productCard__price">{p.price}₽</div>
+  </a>
 
-    <ProductToCartBtn code={productData.code} name={productData.name} price={productData.price}/>
+  <div class="productCard__actionBuy">
+    <ProductToCartBtn code={p.code} name={p.name} price={p.price} />
   </div>
 </div>
+
+<style lang="scss">
+  .productCard {
+    position: relative;
+    padding: 1rem;
+    background: hsla(0, 0%, 100%, 0.25);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.02), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+    transition: translate .25s, box-shadow .25s;
+
+    &:hover {
+      translate: 0 -4px;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.02), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    &__inner {
+      display: grid;
+      grid-template-columns: 100%;
+      grid-template-areas: 'inner';
+      gap: 0.5rem;
+
+      > * {
+        grid-area: inner;
+      }
+    }
+
+    &__image {
+      aspect-ratio: 1;
+      overflow: clip;
+      border-radius: 5px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    &__name {
+      place-self: start start;
+      max-width: 80%;
+      margin: .5rem;
+      padding: .5rem;
+      background: hsla(0, 0%, 30%, 0.15);
+      backdrop-filter: blur(3px);
+      color: #fff;
+      text-shadow: 1px 0 var(--color-text-primary);
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1;
+      text-align: left;
+      text-wrap: balance;
+
+      p + p {
+        margin-top: .5rem;
+      }
+    }
+
+    &__code {
+      display: none;
+    }
+
+    &__price {
+      display: none;
+    }
+
+    &__actionBuy {
+      position: absolute;
+      right: 1rem;
+      bottom: 1rem;
+      margin: .5rem;
+      background: hsla(0, 0%, 50%, 0.15);
+      backdrop-filter: blur(3px);
+      opacity: 0;
+      translate: 5px 0;
+      visibility: hidden;
+      will-change: scale, opacity, transform;
+      transition: .25s;
+
+      &:hover {
+        scale: 1.1;
+      }
+    }
+
+    &:hover &__actionBuy {
+      opacity: 1;
+      translate: 0;
+      visibility: visible;
+    }
+  }
+</style>

@@ -1,23 +1,145 @@
 ---
+import urls from "@/data/urls.ts";
 import Logo from "@/components/partial/Logo.astro";
+import CartIcon from "@/components/icon/CartIcon.astro";
+import ArrowLeftIcon from "@/components/icon/ArrowLeftIcon.astro";
 ---
 
-<header class="header">
+<header class="header" transition:animate="none">
   <div class="container">
-    <div class="logo">
-      <Logo />
+    <div class="header__inner">
+      <aside class="header__back">
+        <div class="header__backLink" onclick="window.history.go(-1); return false;">
+          <div class="_icon"><ArrowLeftIcon /></div>
+          <div class="_text">назад</div>
+        </div>
+      </aside>
+      <div class="header__logo">
+        <a href="/">
+          <Logo />
+        </a>
+      </div>
+      <div class="header__cart">
+        <a class="header__cartLink" href={urls.cart}>
+          <span class="_text">корзина</span>
+          <div class="header__cartIcon _icon">
+            <CartIcon />
+          </div>
+        </a>
+      </div>
     </div>
   </div>
 </header>
 
 <style lang="scss">
   .header {
-    padding: 3rem;
-  }
+    position: sticky;
+    top: -175px;
+    z-index: 1;
+    padding: 1rem;
+    border-bottom: 1px solid var(--color-line);
 
-  .logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    &__inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 3fr) minmax(0, 1fr);
+      grid-template-areas: "back logo cart";
+    }
+
+    &__back {
+      grid-area: back;
+      place-self: end start;
+    }
+
+    &__backLink {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--color-text-primary);
+
+      :global([data-page="index"]) & {
+        display: none;
+      }
+    }
+
+    &__logo {
+      grid-area: logo;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &__cart {
+      grid-area: cart;
+      place-self: end end;
+
+      :global([data-page="cart"]) & {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+
+    &__cartLink {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--color-text-primary);
+
+      ._text {
+        opacity: 0;
+        translate: 5px 0;
+        transition:
+          opacity 0.25s,
+          translate 0.25s;
+      }
+
+      &:hover ._text {
+        opacity: 1;
+        translate: 0;
+      }
+
+      &:hover ._icon {
+        scale: 1.25;
+      }
+    }
+
+    &__cartIcon {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      transition: scale 0.25s;
+    }
+
+    .header__backLink {
+      &:hover {
+        cursor: pointer;
+      }
+
+      ._text {
+        opacity: 0;
+        translate: -5px 0;
+        transition:
+          opacity 0.25s,
+          translate 0.25s;
+      }
+
+      &:hover ._text {
+        opacity: 1;
+        translate: 0;
+      }
+
+      ._icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        transition: scale 0.25s;
+      }
+
+      &:hover ._icon {
+        scale: 1.25;
+      }
+    }
   }
 </style>

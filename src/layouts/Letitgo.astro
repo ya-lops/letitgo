@@ -6,7 +6,13 @@ import ExternalFonts from "@/components/ExternalFonts.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 
-const { title = "letitgo - украшения ручной работы" } = Astro.props;
+interface Props {
+  title?: string;
+  description?: string;
+  page?: string;
+}
+
+const { title = "letitgo - украшения ручной работы", description = "Украшения ручной работы. Натуральный жемчуг!", page } = Astro.props;
 ---
 
 <!doctype html>
@@ -15,10 +21,13 @@ const { title = "letitgo - украшения ручной работы" } = Ast
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
+    <meta name="description" content={description}>
+    <meta name="keywords" content="украшения, жемчуг, ожерелье, handmade">
     <ViewTransitions />
     <ExternalFonts/>
   </head>
-  <body class="letitgo" x-data="letitgo()">
+
+  <body class="letitgo" data-page={page} x-data="letitgo()">
     <Header />
     <main>
       <div class="container">
