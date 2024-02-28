@@ -97,13 +97,19 @@ const productImages = getProductImagesByCode(p.code);
       right: 1rem;
       bottom: 1rem;
       margin: .5rem;
-      background: hsla(0, 0%, 50%, 0.15);
-      backdrop-filter: blur(3px);
+      // background: hsla(0, 0%, 50%, 0.15);
+      // backdrop-filter: blur(3px);
       opacity: 0;
       translate: 5px 0;
       visibility: hidden;
       will-change: scale, opacity, transform;
       transition: .25s;
+
+      &:has(.inCart) {
+        opacity: 1;
+      translate: 0;
+      visibility: visible;
+      }
 
       &:hover {
         scale: 1.1;

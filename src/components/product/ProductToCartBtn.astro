@@ -1,5 +1,6 @@
 ---
-import DotsSpinner from "@/components/icon/DotsSpinner.astro";
+import CartAddItemIcon from "@/components/icon/CartAddItemIcon.astro";
+import CartItemAddedIcon from "@/components/icon/CartItemAddedIcon.astro";
 
 const { code, name, price } = Astro.props;
 ---
@@ -12,22 +13,44 @@ const { code, name, price } = Astro.props;
   data-price={price}
   x-data="product()"
   @click=`toCart()`
-  x-text="btnLabel"
+  :title="btnLabel"
 >
-  <DotsSpinner />
+  <template x-if="inCart">
+    <div class="_label +in">
+      <CartItemAddedIcon />
+    </div>
+  </template>
+  <template x-if="!inCart">
+    <div class="_label +not">
+      <CartAddItemIcon />
+    </div>
+  </template>
 </button>
 
 <style lang="scss">
   .addToCartBtn {
     -webkit-appearance: none;
-    padding: .5rem;
-    background: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
     border: 0;
-    font-size: 1.125rem;
+    border-radius: 5px;
+    background: none;
+    font-size: 2.5rem;
     color: #fff;
+    cursor: pointer;
 
-    &:hover {
-      cursor: pointer;
+    ._label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      filter: drop-shadow(1px 1px 3px #444);
+
+      &.\+in {
+        color: hsl(120, 100%, 75%);
+        animation: jello-horizontal 0.4s both;
+      }
     }
   }
 </style>
