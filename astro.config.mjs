@@ -7,7 +7,7 @@ import mdx from "@astrojs/mdx";
 export default defineConfig({
   compressHTML: true,
   build: {
-    assets: "assets",
+    assets: "static",
     inlineStylesheets: "never",
   },
   redirects: {

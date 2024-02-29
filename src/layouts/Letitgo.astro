@@ -40,13 +40,15 @@ const { title = "letitgo - украшения ручной работы", descri
 
 <script is:inline>
   document.addEventListener("alpine:init", () => {
-    Alpine.store("cart")
+    Alpine.store("cart"),
+    Alpine.store("count")
   });
 
   function letitgo() {
-    // console.log('letitgo is running')
     items = JSON.parse(localStorage.shoppingCart || '[]');
+    count = JSON.parse(localStorage.shoppingCartCount || 0);
     Alpine.store('cart', items);
+    Alpine.store('count', count);
 
     return {
       product() {
@@ -61,12 +63,7 @@ const { title = "letitgo - украшения ручной работы", descri
 
             if (Alpine.store('cart').some(e => e.code === product.code)) {
               this.inCart = true;
-              this.btnLabel = 'Уже в корзине'
             }
-            else {
-              this.inCart = false;
-            }
-            // console.log("product loaded");
           },
 
           toCart() {
@@ -78,34 +75,39 @@ const { title = "letitgo - украшения ручной работы", descri
 
             if (!Alpine.store('cart').some(e => e.code === product.code)) {
               this.inCart = true
-              this.btnLabel = 'Добавлено';
               items.push(product);
+              count = ++count;
               localStorage.setItem('shoppingCart', JSON.stringify(items));
+              localStorage.setItem('shoppingCartCount', count);
               Alpine.store('cart', items);
-              // console.log('Product ' + product + ' added');
-              // console.log(Alpine.store('cart'));
-              // console.log(product)
+              Alpine.store('count', count);
             }
           },
         };
       },
 
       cart() {
+        products = items;
         return {
           init() {
+            count = count;
             label = "Корзина"
             products = items;
-            // console.log('cart loaded');
           }
         }
       },
 
       clearCart() {
-        items = [];
+        this.products = [];
         localStorage.setItem('shoppingCart', []);
+        localStorage.setItem('shoppingCartCount', 0);
         Alpine.store('cart', []);
-        // console.log('clearCart done')
-      }
+        Alpine.store('shoppingCartCount', 0);
+      },
+
+      getCartCount() {
+        return Alpine.store('count') > 0 ? Alpine.store('count') : ''
+      },
     }
   }
 </script>
