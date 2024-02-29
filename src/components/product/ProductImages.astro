@@ -1,0 +1,23 @@
+---
+import { Image } from "astro:assets";
+
+const { images } = Astro.props;
+---
+
+<div class="productImages">
+  {
+    images.map((image) => (
+      <div class="productImages__image">
+        <Image src={image} alt="" decoding="auto" />
+      </div>
+    ))
+  }
+</div>
+
+<style lang="scss">
+  .productImages {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+  }
+</style>

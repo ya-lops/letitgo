@@ -1,0 +1,41 @@
+---
+import { getCollection, getEntry } from "astro:content";
+import Letitgo from "@/layouts/Letitgo.astro";
+import ProductImages from "@/components/product/ProductImages.astro";
+import ProductToCartBtn from "@/components/product/ProductToCartBtn.astro";
+
+export async function getStaticPaths() {
+  const products = await getCollection("products");
+
+  return products.map((product) => ({
+    params: { product: product.slug },
+    props: { product },
+  }));
+}
+
+const { product } = Astro.props;
+const category = await getEntry(product.data.category);
+const { Content } = await product.render();
+---
+
+<Letitgo page="product" title={product.data.name + " – letitgo"}>
+  <article class="product">
+    <header>
+      <h1 class="product__title">{product.data.name}</h1>
+      {category.data.name}
+    </header>
+    <div class="product__images">
+      <ProductImages images={product.data.images} />
+    </div>
+    <div class="product__code">Артикул: {product.data.code}</div>
+    <div class="product__description">Описание: {product.data.description}</div>
+    <div class="product__price">Цена: {product.data.price}₽</div>
+    <div class="product__actionBuy">
+      <ProductToCartBtn product={product} />
+    </div>
+
+    <div class="product__content">
+      <Content/>
+    </div>
+  </article>
+</Letitgo>

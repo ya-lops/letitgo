@@ -2,16 +2,16 @@
 import CartAddItemIcon from "@/components/icon/CartAddItemIcon.astro";
 import CartItemAddedIcon from "@/components/icon/CartItemAddedIcon.astro";
 
-const { code, name, price, image } = Astro.props;
+const { product } = Astro.props;
 ---
 
 <button
   class="addToCartBtn"
   :class="{'inCart' : inCart}"
-  data-code={code}
-  data-name={name}
-  data-price={price}
-  data-image={image}
+  data-code={product.data.code}
+  data-name={product.data.name}
+  data-price={product.data.price}
+  data-image={product.data.images[0].src}
   x-data="product()"
   @click=`toCart()`
   :title="btnLabel"

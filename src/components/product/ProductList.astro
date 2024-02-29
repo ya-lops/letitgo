@@ -1,11 +1,12 @@
 ---
-import productsData from "@/data/products.ts";
-
 import ProductCard from "./ProductCard.astro";
+import { getCollection } from "astro:content";
+
+const products = await getCollection("products");
 ---
 
 <section class="products">
-  {productsData.map((product) => <ProductCard productData={product} />)}
+  {products.map((product) => <ProductCard product={product} />)}
 </section>
 
 <style lang="scss">
