@@ -9,9 +9,12 @@ import ArrowLeftIcon from "@/components/icon/ArrowLeftIcon.astro";
   <div class="container">
     <div class="header__inner">
       <aside class="header__back">
-        <div class="header__backLink" onclick="window.history.go(-1); return false;">
-          <div class="_icon"><ArrowLeftIcon /></div>
+        <div
+          class="header__link +reversed"
+          onclick="window.history.go(-1); return false;"
+        >
           <div class="_text">назад</div>
+          <div class="_icon"><ArrowLeftIcon /></div>
         </div>
       </aside>
       <div class="header__logo">
@@ -20,9 +23,9 @@ import ArrowLeftIcon from "@/components/icon/ArrowLeftIcon.astro";
         </a>
       </div>
       <div class="header__cart">
-        <a class="header__cartLink" href={urls.cart}>
+        <a class="header__link header__cartLink" href={urls.cart}>
           <span class="_text">корзина</span>
-          <div class="header__cartIcon _icon">
+          <div class="_icon">
             <CartIcon />
             <span x-text="getCartCount()"></span>
           </div>
@@ -35,10 +38,11 @@ import ArrowLeftIcon from "@/components/icon/ArrowLeftIcon.astro";
 <style lang="scss">
   .header {
     position: sticky;
-    top: -175px;
+    top: 0;
     z-index: 1;
-    padding: 1rem;
+    padding: 0.5rem;
     border-bottom: 1px solid var(--color-line);
+    background: var(--color-surface-0);
 
     &__inner {
       display: grid;
@@ -46,80 +50,16 @@ import ArrowLeftIcon from "@/components/icon/ArrowLeftIcon.astro";
       grid-template-areas: "back logo cart";
     }
 
-    &__back {
-      grid-area: back;
-      place-self: end start;
-    }
-
-    &__backLink {
+    &__link {
       display: flex;
       align-items: center;
       gap: 0.5rem;
       color: var(--color-text-primary);
-
-      :global([data-page="index"]) & {
-        display: none;
-      }
-    }
-
-    &__logo {
-      grid-area: logo;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    &__cart {
-      grid-area: cart;
-      place-self: end end;
-
-      :global([data-page="cart"]) & {
-        opacity: 0;
-        visibility: hidden;
-      }
-    }
-
-    &__cartLink {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: var(--color-text-primary);
+      cursor: pointer;
 
       ._text {
         opacity: 0;
-        translate: 5px 0;
-        transition:
-          opacity 0.25s,
-          translate 0.25s;
-      }
-
-      &:hover ._text {
-        opacity: 1;
-        translate: 0;
-      }
-
-      &:hover ._icon {
-        scale: 1.25;
-      }
-    }
-
-    &__cartIcon {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      transition: scale 0.25s;
-    }
-
-    .header__backLink {
-      &:hover {
-        cursor: pointer;
-      }
-
-      ._text {
-        opacity: 0;
-        translate: -5px 0;
+        translate: var(--_text-translate, 5px) 0;
         transition:
           opacity 0.25s,
           translate 0.25s;
@@ -134,12 +74,52 @@ import ArrowLeftIcon from "@/components/icon/ArrowLeftIcon.astro";
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.5rem;
-        transition: scale 0.25s;
+        font-size: 1.25rem;
       }
 
-      &:hover ._icon {
-        scale: 1.25;
+      &.\+reversed {
+        --_text-translate: -5px;
+        flex-direction: row-reverse;
+      }
+    }
+
+    &__back {
+      grid-area: back;
+      place-self: end start;
+    }
+
+    &__logo {
+      grid-area: logo;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &__cart {
+      grid-area: cart;
+      place-self: end end;
+
+      ._icon {
+        display: flex;
+        align-items: center;
+
+        span {
+          font-size: .75rem;
+        }
+      }
+    }
+
+    // hide on 'index' page
+    &__back {
+      :global([data-page="index"]) & {
+        display: none;
+      }
+    }
+
+    // hide on 'cart' page
+    &__cart {
+      :global([data-page="cart"]) & {
+        display: none;
       }
     }
   }
