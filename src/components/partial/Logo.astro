@@ -3,10 +3,10 @@
 ---
 
 <div class="logo">
-  <div class="icon">
-    <img src="/images/icon-letitgo.png" alt="">
+  <div class="logo__icon">
+    <img src="/images/icon-letitgo.png" alt="" />
   </div>
-  <div class="text">letitgo</div>
+  <div class="logo__text">letitgo</div>
 </div>
 
 <style lang="scss">
@@ -15,20 +15,20 @@
     flex-flow: row;
     align-items: center;
     gap: 1rem;
-  }
 
-  .icon {
-    img {
-      height: 3rem;
-      filter: brightness(0);
-      user-select: none;
+    &__icon {
+      img {
+        height: 3rem;
+        filter: brightness(0);
+        user-select: none;
+      }
     }
-  }
 
-  .text {
-    color: var(--color-text-primary);
-    font-size: 3rem;
-    font-family: var(--font-family-logo);
-    will-change: scale;
+    &__text {
+      color: var(--color-text-primary);
+      font-size: 3rem;
+      font-family: var(--font-family-logo);
+      transform: translateZ(0px);
+    }
   }
 </style>

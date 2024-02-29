@@ -17,12 +17,12 @@ const { product } = Astro.props;
   :title="btnLabel"
 >
   <template x-if="inCart">
-    <div class="_label +in">
+    <div class="_label +incart">
       <CartItemAddedIcon />
     </div>
   </template>
   <template x-if="!inCart">
-    <div class="_label +not">
+    <div class="_label">
       <CartAddItemIcon />
     </div>
   </template>
@@ -30,25 +30,16 @@ const { product } = Astro.props;
 
 <style lang="scss">
   .addToCartBtn {
-    -webkit-appearance: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5rem;
-    border: 0;
-    border-radius: 5px;
-    background: none;
     font-size: 2.5rem;
     color: #fff;
-    cursor: pointer;
 
     ._label {
       display: flex;
       align-items: center;
       justify-content: center;
-      filter: drop-shadow(1px 1px 3px #444);
+      filter: drop-shadow(1px 1px 3px var(--color-text-secondary));
 
-      &.\+in {
+      &.\+incart {
         color: hsl(120, 100%, 75%);
         animation: jello-horizontal 0.4s both;
       }

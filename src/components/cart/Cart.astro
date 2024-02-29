@@ -1,18 +1,20 @@
 ---
 import CartClearBtn from "@/components/cart/CartClearBtn.astro";
 import CartOrderForm from "@/components/cart/CartOrderForm.astro";
+import CartOrderBtn from "@/components/cart/CartOrderBtn.astro";
 ---
 
 <article x-data="{ products: items }" class="cart">
   <header class="cart__header">
     <h1>Корзина</h1>
   </header>
+
   <div class="cart__headings _row">
     <span>Название</span>
     <span>Артикул</span>
     <span>Цена</span>
   </div>
-  <pre x-text="products"></pre>
+
   <template x-for="product in products">
     <div class="cart__item _row">
       <img x-bind:src="product.image"/>
@@ -21,6 +23,8 @@ import CartOrderForm from "@/components/cart/CartOrderForm.astro";
       <span x-text="product.price + '₽'"></span>
     </div>
   </template>
+
+  <CartOrderBtn>Оформить заказ</CartOrderBtn>
   
   <CartClearBtn>Очистить корзину</CartClearBtn>
 
