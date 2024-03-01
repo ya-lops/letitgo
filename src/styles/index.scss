@@ -1,5 +1,12 @@
-@import "fonts";
-@import "reset";
-@import "props";
-@import "app";
-@import "animations";
+@layer reset, app;
+
+@layer reset {
+  @import "reset";
+}
+
+@layer app {
+  @import "fonts";
+  @import "props";
+  @import "app";
+  @import "animations";
+}

@@ -4,13 +4,6 @@ import { Image } from "astro:assets";
 import ProductToCartBtn from "@/components/product/ProductToCartBtn.astro";
 
 const { product } = Astro.props;
-
-// TODO
-// заменить `product.data.images[0]` на `thumb`
-// все необходимое сделать в контенте
-
-// TODO
-// отрефакторить здесь стили DIY
 ---
 
 <div class="productCard">
@@ -19,7 +12,7 @@ const { product } = Astro.props;
       <Image
         src={product.data.images[0]}
         alt=""
-        quality="mid"
+        quality="low"
         decoding="auto"
         loading="eager"
       />

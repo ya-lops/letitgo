@@ -1,7 +1,8 @@
 import { defineConfig } from "astro/config";
 import alpinejs from "@astrojs/alpinejs";
-
 import mdx from "@astrojs/mdx";
+
+import compress from "astro-compress";
 
 // https://astro.build/config
 export default defineConfig({
@@ -18,6 +19,7 @@ export default defineConfig({
     mdx({
       syntaxHighlight: "shiki",
     }),
+    compress(),
   ],
   vite: {
     css: {

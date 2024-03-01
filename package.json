@@ -16,12 +16,14 @@
     "@typescript-eslint/parser": "^7.1.0",
     "alpinejs": "^3.13.5",
     "astro": "^4.4.4",
+    "astro-compress": "^2.2.11",
     "eslint": "^8.57.0",
     "eslint-plugin-astro": "^0.31.4",
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "prettier": "^3.2.5",
     "prettier-config-standard": "^7.0.0",
     "prettier-plugin-astro": "^0.13.0",
-    "sass": "^1.71.1"
+    "sass": "^1.71.1",
+    "sharp": "^0.33.2"
   }
 }
