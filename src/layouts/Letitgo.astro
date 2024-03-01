@@ -12,7 +12,11 @@ interface Props {
   page?: string;
 }
 
-const { title = "letitgo - украшения ручной работы", description = "Украшения ручной работы. Натуральный жемчуг!", page } = Astro.props;
+const {
+  title = "letitgo - украшения ручной работы",
+  description = "Украшения ручной работы. Натуральный жемчуг!",
+  page,
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -21,10 +25,10 @@ const { title = "letitgo - украшения ручной работы", descri
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
-    <meta name="description" content={description}>
-    <meta name="keywords" content="украшения, жемчуг, ожерелье, handmade">
+    <meta name="description" content={description} />
+    <meta name="keywords" content="украшения, жемчуг, ожерелье, handmade" />
     <ViewTransitions />
-    <ExternalFonts/>
+    <ExternalFonts />
   </head>
 
   <body class="letitgo" data-page={page} x-data="letitgo()">
@@ -40,74 +44,77 @@ const { title = "letitgo - украшения ручной работы", descri
 
 <script is:inline>
   document.addEventListener("alpine:init", () => {
-    Alpine.store("cart"),
-    Alpine.store("count")
+    Alpine.store("cart"), Alpine.store("count");
   });
 
   function letitgo() {
-    items = JSON.parse(localStorage.shoppingCart || '[]');
-    count = JSON.parse(localStorage.shoppingCartCount || 0);
-    Alpine.store('cart', items);
-    Alpine.store('count', count);
+    items = JSON.parse(sessionStorage.shoppingCart || "[]");
+    count = JSON.parse(sessionStorage.shoppingCartCount || 0);
+    Alpine.store("cart", items);
+    Alpine.store("count", count);
 
     return {
       product() {
         return {
           inCart: false,
-          btnLabel: 'В корзину',
+          buyBtnTitle: "В корзину",
 
           init() {
-            Alpine.store('cart', items);
-            const product = {}
-            product.code = this.$el.dataset.code
-
-            if (Alpine.store('cart').some(e => e.code === product.code)) {
-              this.inCart = true;
-            }
-          },
-
-          toCart() {
-            const product = {}
+            Alpine.store("cart", items);
+            const product = {};
             product.code = this.$el.dataset.code;
-            product.name = this.$el.dataset.name;
-            product.price = this.$el.dataset.price;
-            product.image = this.$el.dataset.image;
 
-            if (!Alpine.store('cart').some(e => e.code === product.code)) {
-              this.inCart = true
-              items.push(product);
-              count = ++count;
-              localStorage.setItem('shoppingCart', JSON.stringify(items));
-              localStorage.setItem('shoppingCartCount', count);
-              Alpine.store('cart', items);
-              Alpine.store('count', count);
+            if (Alpine.store("cart").some((e) => e.code === product.code)) {
+              this.inCart = true;
             }
           },
         };
       },
 
-      cart() {
-        products = items;
-        return {
-          init() {
-            count = count;
-            label = "Корзина"
-            products = items;
-          }
+      toCart() {
+        const product = {};
+        product.code = this.$el.dataset.code;
+        product.name = this.$el.dataset.name;
+        product.price = this.$el.dataset.price;
+        product.image = this.$el.dataset.image;
+
+        if (!Alpine.store("cart").some((e) => e.code === product.code)) {
+          this.inCart = true;
+          items.push(product);
+          count = ++count;
+          sessionStorage.setItem("shoppingCart", JSON.stringify(items));
+          sessionStorage.setItem("shoppingCartCount", count);
+          Alpine.store("cart", items);
+          Alpine.store("count", count);
         }
       },
 
+      removeFromCart(product) {
+        items = Alpine.store("cart").filter((e) => e.code !== product.code);
+        count = Alpine.store("count") - 1;
+        sessionStorage.setItem("shoppingCart", JSON.stringify(items));
+        sessionStorage.setItem("shoppingCartCount", count);
+        Alpine.store("cart", items);
+        Alpine.store("count", count);
+        this.products = items;
+      },
+
+
       clearCart() {
         this.products = [];
-        localStorage.setItem('shoppingCart', []);
-        localStorage.setItem('shoppingCartCount', 0);
-        Alpine.store('cart', []);
-        Alpine.store('shoppingCartCount', 0);
+        sessionStorage.setItem("shoppingCart", []);
+        sessionStorage.setItem("shoppingCartCount", 0);
+        Alpine.store("cart", []);
+        Alpine.store("shoppingCartCount", 0);
       },
 
       getCartCount() {
-        return Alpine.store('count') > 0 ? Alpine.store('count') : ''
+        return Alpine.store("count") > 0 ? Alpine.store("count") : "";
       },
-    }
+
+      getTotalPrice() {
+        return this.products.reduce((total, cur) => total + Number(cur.price), 0);
+      },
+    };
   }
 </script>

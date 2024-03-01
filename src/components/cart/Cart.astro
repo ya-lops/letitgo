@@ -7,22 +7,29 @@ import CartOrderBtn from "@/components/cart/CartOrderBtn.astro";
 <article x-data="{ products: items }" class="cart">
   <header class="cart__header">
     <h1>Корзина</h1>
+    
   </header>
 
   <div class="cart__headings _row">
-    <span>Название</span>
-    <span>Артикул</span>
-    <span>Цена</span>
+    <span>название</span>
+    <span>артикул</span>
+    <span>цена</span>
   </div>
 
   <template x-for="product in products">
     <div class="cart__item _row">
-      <img x-bind:src="product.image"/>
+      <!-- <img x-bind:src="product.image"/> -->
+      <button @click="removeFromCart(product)">REMOVE</button>
       <span x-text="product.name"></span>
       <span x-text="product.code"></span>
       <span x-text="product.price + '₽'"></span>
     </div>
   </template>
+
+  <div class="cart__total">
+    <span>итого</span>
+    <span x-text="getTotalPrice"></span><span>₽</span>
+  </div>
 
   <CartOrderBtn>Оформить заказ</CartOrderBtn>
   

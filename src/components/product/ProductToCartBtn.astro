@@ -14,7 +14,7 @@ const { product } = Astro.props;
   data-image={product.data.images[0].src}
   x-data="product()"
   @click=`toCart()`
-  :title="btnLabel"
+  :title="buyBtnTitle"
 >
   <template x-if="inCart">
     <div class="_label +incart">
