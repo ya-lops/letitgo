@@ -1,10 +1,11 @@
 :root {
   --color-surface-0: hsl(42, 45%, 95%);
-  --color-surface-1: hsl(247, 14%, 41%);
+  --color-surface-1: hsla(0,0%,100%,0.5);
 
   --color-text-primary: hsl(120, 1%, 15%);
   --color-text-primary-inverse: hsl(120, 1%, 85%);
   --color-text-secondary: hsl(120, 1%, 30%);
+  --color-text-danger: hsl(5, 90%, 60%);
 
   --color-line: hsl(45deg 30% 80%);
 

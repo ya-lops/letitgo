@@ -1,4 +1,5 @@
 ---
+import urls from "@/data/urls";
 import CartAddItemIcon from "@/components/icon/CartAddItemIcon.astro";
 import CartItemAddedIcon from "@/components/icon/CartItemAddedIcon.astro";
 
@@ -8,6 +9,7 @@ const { product } = Astro.props;
 <button
   class="addToCartBtn"
   :class="{'inCart' : inCart}"
+  data-url={urls.product+product.slug}
   data-code={product.data.code}
   data-name={product.data.name}
   data-price={product.data.price}

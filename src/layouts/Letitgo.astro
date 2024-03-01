@@ -73,6 +73,7 @@ const {
 
       toCart() {
         const product = {};
+        product.url = this.$el.dataset.url;
         product.code = this.$el.dataset.code;
         product.name = this.$el.dataset.name;
         product.price = this.$el.dataset.price;
@@ -98,7 +99,6 @@ const {
         Alpine.store("count", count);
         this.products = items;
       },
-
 
       clearCart() {
         this.products = [];

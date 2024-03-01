@@ -1,14 +1,42 @@
 ---
-
+import CartClearIcon from "@/components/icon/CartClearIcon.astro";
 ---
 
 <button class="cartClearBtn" @click=`clearCart()`>
-  <slot/>
+  <div class="_text">
+    <slot />
+  </div>
+  <div class="_icon">
+    <CartClearIcon />
+  </div>
 </button>
 
 <style lang="scss">
   .cartClearBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0;
+    border-radius: 0;
     font-size: 1.25rem;
-    color: #fff;
+    transition: color 0.125s;
+
+    &:hover {
+      color: var(--color-text-danger);
+    }
+
+    ._text {
+      font-size: 0.75rem;
+      opacity: 0;
+      translate: var(--_text-translate, 5px) 0;
+      transition:
+        opacity 0.25s,
+        translate 0.25s;
+    }
+
+    &:hover ._text {
+      opacity: 1;
+      translate: 0;
+    }
   }
 </style>

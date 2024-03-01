@@ -2,47 +2,187 @@
 import CartClearBtn from "@/components/cart/CartClearBtn.astro";
 import CartOrderForm from "@/components/cart/CartOrderForm.astro";
 import CartOrderBtn from "@/components/cart/CartOrderBtn.astro";
+import CartRemoveItemBtn from "@/components/cart/CartRemoveItemBtn.astro";
 ---
 
 <article x-data="{ products: items }" class="cart">
   <header class="cart__header">
     <h1>Корзина</h1>
-    
+    <div x-show="products.length > 0">
+      <CartClearBtn>очистить корзину</CartClearBtn>
+    </div>
   </header>
 
-  <div class="cart__headings _row">
-    <span>название</span>
-    <span>артикул</span>
-    <span>цена</span>
+  <div x-show="products.length < 1" class="cart__empty" x-transition>
+    <span>в корзине ничего нет</span>
   </div>
 
-  <template x-for="product in products">
-    <div class="cart__item _row">
-      <!-- <img x-bind:src="product.image"/> -->
-      <button @click="removeFromCart(product)">REMOVE</button>
-      <span x-text="product.name"></span>
-      <span x-text="product.code"></span>
-      <span x-text="product.price + '₽'"></span>
+  <div x-show="products.length > 0" class="cart__inner" x-transition>
+    <div class="cart__headings _row">
+      <span> </span>
+      <span>название</span>
+      <span style="justify-self: end;">цена</span>
+      <span> </span>
     </div>
-  </template>
 
-  <div class="cart__total">
-    <span>итого</span>
-    <span x-text="getTotalPrice"></span><span>₽</span>
+    <div x-show="products.length > 0" class="cart__items" x-transition>
+      <template x-for="product in products">
+        <div class="cart__item _row">
+          <div class="_image">
+            <a :href="product.url" :aria-label={"'Ссылка на изделие ' + product.name"}>
+              <img x-bind:src="product.image" :alt={"'Фото изделия ' + product.name"} />
+            </a>
+          </div>
+          <div class="_nameblock">
+            <div class="_name">
+              <a :href="product.url" :aria-label={"'Ссылка на изделие ' + product.name"}>
+                <span x-text="product.name"></span>
+              </a>
+            </div>
+            <div class="_code">
+              <span x-text="product.code"></span>
+            </div>
+          </div>
+          <div class="_price">
+            <span x-text="product.price"></span><span>₽</span>
+          </div>
+          <div class="_actions">
+            <CartRemoveItemBtn/>
+          </div>
+        </div>
+      </template>
+    </div>
+
+    <div class="cart__total">
+      <div class="_value">
+        <span class="_label"> = </span>
+        <span x-text="getTotalPrice"></span><span>₽</span>
+      </div>
+      <div class="_actions">
+        <CartOrderBtn>оформить заказ</CartOrderBtn>
+  
+        <!-- btn - оформить заказ -->
+        <!-- form - оформление заказа -->
+      </div>
+    </div>
+
+    
   </div>
-
-  <CartOrderBtn>Оформить заказ</CartOrderBtn>
-  
-  <CartClearBtn>Очистить корзину</CartClearBtn>
-
-  <!-- btn - оформить заказ -->
-  <!-- form - оформление заказа -->
-  
 </article>
 
 <style lang="scss">
-  ._row {
+  .cart {
+    --_columns: 64px minmax(0, 2fr) minmax(0, 0.5fr) 80px;
+
     display: grid;
-    grid-template-columns: auto minmax(0,2fr) minmax(0,.5fr) minmax(0,1fr);
+    grid-template-columns: 100%;
+    gap: 2rem;
+
+    &__header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    &__empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 5rem;
+      border-radius: 5px;
+      background: var(--color-surface-1);
+    }
+
+    ._row {
+      display: grid;
+      grid-template-columns: 64px minmax(0, 2fr) minmax(0, 0.5fr) 80px;
+      gap: 0.5rem;
+      padding: .25rem;
+    }
+
+    &__headings {
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--color-line);
+      font-size: .75rem;
+      color: var(--color-text-secondary);
+    }
+
+    &__items {
+      display: flex;
+      flex-flow: column;
+      gap: 0.5rem;
+      padding-top: 1rem;
+    }
+
+    &__item {
+      align-items: center;
+      background: var(--color-surface-1);
+      box-shadow: 0 2px 4px 0 rgba(0,0,0,0.02);
+
+      ._image {
+        aspect-ratio: 1;
+        padding: .25rem;
+        border-radius: 4px;
+        overflow: clip;
+      }
+
+      ._name {
+        font-weight: bold;
+
+        a:hover {
+          text-decoration: underline;
+        }
+      }
+
+      ._code {
+        color: var(--color-text-secondary);
+        font-size: .75rem;
+        font-style: italic;
+      }
+
+      ._price {
+        justify-self: end;
+      }
+
+      ._actions {
+        justify-self: center;
+
+        > :global(button) {
+          opacity: .5;
+          color: var(--color-text-secondary);
+          transition: scale .25s, opacity .125s, color .125s;
+
+          &:hover {
+            opacity: 1;
+            color: var(--color-text-danger);
+          }
+        }
+      }
+    }
+
+    &__total {
+      display: grid;
+      grid-template-columns: var(--_columns);
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 0.25rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+
+      ._value,
+      ._actions {
+        grid-column: span 3;
+        justify-self: end;
+      }
+
+      ._actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: .5rem;
+      }
+    }
   }
 </style>

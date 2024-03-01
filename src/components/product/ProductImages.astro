@@ -8,7 +8,7 @@ const { images } = Astro.props;
   {
     images.map((image) => (
       <div class="productImages__image">
-        <Image src={image} alt="" decoding="auto" />
+        <Image src={image} alt="" decoding="auto" loading="eager" />
       </div>
     ))
   }

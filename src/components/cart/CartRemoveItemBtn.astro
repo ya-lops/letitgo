@@ -1,0 +1,13 @@
+---
+import CartRemoveItemIcon from "@/components/icon/CartRemoveItemIcon.astro";
+---
+
+<button class="removeFromCart" @click="removeFromCart(product)" title="Удалить из корзины">
+  <CartRemoveItemIcon/>
+</button>
+
+<style lang="scss">
+  .removeFromCart {
+    font-size: 1.5rem;
+  }
+</style>
