@@ -9,10 +9,42 @@ const products = await getCollection("products");
   {products.map((product) => <ProductCard product={product} />)}
 </section>
 
-<style lang="scss">
+<style lang="scss" is:global>
   .products {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 2rem;
+
+    @media (width > 900px) {
+      [data-page=index] & {
+        > * {
+          transform: translatey(0%);
+          animation-name: rollinup;
+          animation-fill-mode: both;
+          animation-timeline: view();
+          // animation-range-start: cover -10%;
+          animation-range-end: cover 30%;
+
+          &:nth-child(even) {
+            transform: translatey(20%);
+            animation-name: rollinup-even;
+            // animation-range-start: cover -25%;
+            animation-range-end: cover 70%;
+          }
+
+          @keyframes rollinup {
+            from {
+              transform: translatey(50%);
+            }
+          }
+
+          @keyframes rollinup-even {
+            from {
+              transform: translatey(60%);
+            }
+          }
+        }
+      }
+    }
   }
 </style>

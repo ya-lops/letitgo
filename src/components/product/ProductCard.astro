@@ -6,9 +6,9 @@ import ProductToCartBtn from "@/components/product/ProductToCartBtn.astro";
 const { product } = Astro.props;
 ---
 
-<div class="productCard">
-  <a class="productCard__inner" href={urls.product + product.slug}>
-    <div class="productCard__image">
+<div class="productCard" >
+  <a class="productCard__inner" href={urls.product + product.slug} >
+    <div class="productCard__images" transition:name={'t-'+product.slug}>
       <Image
         src={product.data.images[0]}
         alt=""
@@ -17,8 +17,8 @@ const { product } = Astro.props;
         loading="eager"
       />
     </div>
-    <div class="productCard__name">
-      <p class="_name">{product.data.name}</p>
+    <div class="productCard__name" transition:name={'h-'+product.slug}>
+      <p class="_name" >{product.data.name}</p>
       <p class="_price">= {product.data.price}₽</p>
     </div>
     <div class="productCard__code">Артикул: {product.data.code}</div>
@@ -59,7 +59,7 @@ const { product } = Astro.props;
       }
     }
 
-    &__image {
+    &__images {
       aspect-ratio: 1;
       overflow: clip;
       border-radius: 5px;

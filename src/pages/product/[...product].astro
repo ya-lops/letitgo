@@ -21,22 +21,24 @@ const { Content } = await product.render();
 
 <Letitgo page="product" title={product.data.name + " – letitgo"}>
   <article class="product">
-    <header>
-      <h1 class="product__title">{product.data.name}</h1>
-    </header>
-    <div class="product__images">
+    <div class="product__images" transition:name={"t-" + product.slug}>
       <ProductImages images={product.data.images} />
     </div>
-    <div class="product__code">Артикул: {product.data.code}</div>
-    <div class="product__category">Категория: {category.data.name}</div>
-    <div class="product__description">Описание: {product.data.description}</div>
-    <div class="product__price">Цена: {product.data.price}₽</div>
-    <div class="product__actionBuy">
-      <ProductToCartBtn product={product} />
-    </div>
-
-    <div class="product__content">
-      <Content />
+    <div class="product__info" transition:animate="slide">
+      <header>
+        <h1 class="product__title">{product.data.name}</h1>
+      </header>
+      <div class="product__code"><b>Артикул</b>: {product.data.code}</div>
+      <div class="product__category">
+        <b>Категория</b>: {category.data.name}
+      </div>
+      <div class="product__description">
+        <b>Описание</b>: {product.data.description}
+      </div>
+      <div class="product__price">
+        <div>= {product.data.price}₽</div>
+        <ProductToCartBtn product={product} />
+      </div>
     </div>
   </article>
 
@@ -45,3 +47,33 @@ const { Content } = await product.render();
     excludeProductSlug={product.slug}
   />
 </Letitgo>
+
+<style lang="scss">
+  .product {
+    display: grid;
+    grid-template-columns: 100%;
+    gap: 2rem;
+    padding-bottom: 2rem;
+
+    @media (width > 960px) {
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+
+      &__info {
+        position: sticky;
+        top: 120px;
+        align-self: start;
+        display: grid;
+        grid-template-columns: 100%;
+        gap: 1rem;
+      }
+    }
+
+    &__price {
+      display: flex;
+      align-items: center;
+      gap: .25rem;
+      font-size: 1.25rem;
+      font-weight: bold;
+    }
+  }
+</style>
