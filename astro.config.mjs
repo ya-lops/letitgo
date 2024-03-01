@@ -19,7 +19,7 @@ export default defineConfig({
     mdx({
       syntaxHighlight: "shiki",
     }),
-    (await import("astro-compress")).default({
+    compress({
 			CSS: false,
 			HTML: true,
 			Image: false,
