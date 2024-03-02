@@ -23,7 +23,7 @@ body {
   padding-inline: 1rem;
 }
 
-button {
+button:not([disabled]) {
   -webkit-appearance: none;
   display: flex;
   align-items: center;

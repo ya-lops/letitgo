@@ -17,21 +17,6 @@ import Letitgo from "@/layouts/Letitgo.astro";
     </form>
   </section>
 
-  <script
-    is:inline
-    type="text/javascript"
-    src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
-  ></script>
-
-  <script is:inline type="text/javascript">
-    (function () {
-      emailjs.init({
-        publicKey: "tT4yuubyXj_gbPRY4",
-      });
-      console.log("mail send init");
-    })();
-  </script>
-
   <script is:inline type="text/javascript">
     window.onload = function () {
       document
@@ -39,7 +24,8 @@ import Letitgo from "@/layouts/Letitgo.astro";
         .addEventListener("submit", function (event) {
           event.preventDefault();
           // these IDs from the previous steps
-          emailjs.sendForm("contact_service", "contact_form", this, 'service_72h0drh').then(
+          console.log("sending...");
+          emailjs.sendForm("service_72h0drh", "template_61e5xwp", this).then(
             () => {
               console.log("SUCCESS!");
             },

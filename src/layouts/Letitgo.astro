@@ -2,6 +2,7 @@
 import "@/styles/index.scss";
 
 import { ViewTransitions } from "astro:transitions";
+import MailJS from "@/components/MailJS.astro";
 import ExternalFonts from "@/components/ExternalFonts.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
@@ -29,6 +30,7 @@ const {
     <meta name="keywords" content="украшения, жемчуг, ожерелье, handmade" />
     <ViewTransitions />
     <ExternalFonts />
+    <MailJS></MailJS>
   </head>
 
   <body class="letitgo" data-page={page} x-data="letitgo()">
@@ -53,7 +55,6 @@ const {
     Alpine.store("cart", items);
     Alpine.store("count", count);
     const orderDialog = document.getElementById("orderDialog");
-    orderList = '';
 
     return {
       product() {
@@ -125,24 +126,36 @@ const {
 
       openOrderDialog() {
         orderDialog.showModal();
-        console.log('order dialog opened');
+      },
+
+      getOrderList() {
+        return {
+          init() {
+            orderList = items;
+            orderListTotalPrice = this.getTotalPrice;
+          }
+        }
+      },
+
+      submitOrder() {
+        console.log("submit clicked");
+        this.orderSubmiting = true;
+
+        emailjs.sendForm("service_72h0drh", "template_61e5xwp", this.$el).then(
+          () => {
+            console.log("SUCCESS!");
+            this.closeOrderDialog();
+            this.clearCart();
+          },
+          (error) => {
+            console.log("FAILED...", error);
+          },
+        );
       },
 
       closeOrderDialog() {
         orderDialog.close();
         this.clearInputs();
-      },
-
-      submitOrder() {
-        orderList = '';
-        for (const item of JSON.parse(sessionStorage.shoppingCart)) {
-          orderList += ` - *${item.name}* (${item.code}, ${item.price}р.) %0a`;
-        }
-        orderMessage = "Здравствуйте, хочу заказать следующее: %0a"
-        orderMessage += orderList;
-        orderHref = "https://wa.me/79265710813?text=" + orderMessage;
-        window.location.href = orderHref;
-        console.log(orderHref);
       },
 
       clearInputs() {
