@@ -2,12 +2,82 @@
 
 ---
 
-<div class="orderForm">
-  
-</div>
+<dialog id="orderDialog" class="orderDialog">
+  <header class="orderDialog__header">
+    <h3>Оформление заказа</h3>
+    <div class="_closeBtn">
+      <button @click="closeOrderDialog()">x</button>
+    </div>
+  </header>
 
-<style lang="scss">
-  .orderForm {
+  <div class="orderDialog__formWrap">
+    <form id="contact-form" class="orderDialog__form" x-data="{ orderSubmiting: false }" @submit.prevent="submitOrder">
+      <input type="hidden" name="fromOrderList" :value="orderList" />
 
+      <div class="formField">
+        <label>Имя</label>
+        <input type="text" name="fromName" placeholder="Ваше имя" pattern="[А-Яа-яЁё]{3,30}" minlength="3" maxlength="30" autocomplete="off" required/>
+        <div class="_error">Только кириллица, от 3 до 30 символов</div>
+      </div>
+
+      <div class="formField">
+        <label>Телефон</label>
+        <input type="tel" name="fromPhone" placeholder="Например, 89876543210" pattern="[\d|\s|\-|\(|\)|\+]{10,14}" minlength="11" maxlength="20" autocomplete="off" required/>
+        <div class="_error">от 11 до 20 символов</div>
+      </div>
+
+      <div class="formField">
+        <label>Комментарий</label>
+        <textarea name="fromMessage" placeholder="Удобное время для связи, доставки или другая важная информация"></textarea>
+      </div>
+
+      <div class="orderDialog__actions">
+        <button type="button" @click="closeOrderDialog()">отмена</button>
+        <button :disabled="orderSubmiting">заказать</button>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+
+<style lang="scss" is:global>
+  .orderDialog {
+    position: relative;
+    padding: 2rem 3rem;
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+
+      ._closeBtn {
+        position: absolute;
+        top: 2rem;
+        right: 2rem;
+
+        button {
+          padding: 0;
+          border: 0;
+          transition: scale 0.25s;
+          will-change: scale;
+
+          &:hover {
+            scale: 1.15;
+          }
+        }
+      }
+    }
+
+    &__form {
+      display: grid;
+      grid-template-columns: 100%;
+      gap: .25rem;
+      padding-top: 2rem;
+    }
+
+    &__actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+    }
   }
 </style>

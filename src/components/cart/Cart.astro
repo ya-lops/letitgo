@@ -5,7 +5,7 @@ import CartOrderBtn from "@/components/cart/CartOrderBtn.astro";
 import CartRemoveItemBtn from "@/components/cart/CartRemoveItemBtn.astro";
 ---
 
-<article x-data="{ products: items }" class="cart">
+<article x-data="{ products: items, orderList: 'asd' }" class="cart">
   <header class="cart__header">
     <h1>Корзина</h1>
     <div x-show="products.length > 0">
@@ -29,13 +29,22 @@ import CartRemoveItemBtn from "@/components/cart/CartRemoveItemBtn.astro";
       <template x-for="product in products">
         <div class="cart__item _row">
           <div class="_image">
-            <a :href="product.url" :aria-label={"'Ссылка на изделие ' + product.name"}>
-              <img x-bind:src="product.image" :alt={"'Фото изделия ' + product.name"} />
+            <a
+              :href="product.url"
+              :aria-label={"'Ссылка на изделие ' + product.name"}
+            >
+              <img
+                x-bind:src="product.image"
+                :alt={"'Фото изделия ' + product.name"}
+              />
             </a>
           </div>
           <div class="_nameblock">
             <div class="_name">
-              <a :href="product.url" :aria-label={"'Ссылка на изделие ' + product.name"}>
+              <a
+                :href="product.url"
+                :aria-label={"'Ссылка на изделие ' + product.name"}
+              >
                 <span x-text="product.name"></span>
               </a>
             </div>
@@ -47,7 +56,7 @@ import CartRemoveItemBtn from "@/components/cart/CartRemoveItemBtn.astro";
             <span x-text="product.price"></span><span>₽</span>
           </div>
           <div class="_actions">
-            <CartRemoveItemBtn/>
+            <CartRemoveItemBtn />
           </div>
         </div>
       </template>
@@ -62,9 +71,9 @@ import CartRemoveItemBtn from "@/components/cart/CartRemoveItemBtn.astro";
         <CartOrderBtn>оформить заказ</CartOrderBtn>
       </div>
     </div>
-
-    
   </div>
+
+  <CartOrderForm />
 </article>
 
 <style lang="scss">
@@ -96,13 +105,13 @@ import CartRemoveItemBtn from "@/components/cart/CartRemoveItemBtn.astro";
       display: grid;
       grid-template-columns: 64px minmax(0, 2fr) minmax(0, 0.5fr) 80px;
       gap: 0.5rem;
-      padding: .25rem;
+      padding: 0.25rem;
     }
 
     &__headings {
       padding-bottom: 0.5rem;
       border-bottom: 1px solid var(--color-line);
-      font-size: .75rem;
+      font-size: 0.75rem;
       color: var(--color-text-secondary);
     }
 
@@ -116,11 +125,11 @@ import CartRemoveItemBtn from "@/components/cart/CartRemoveItemBtn.astro";
     &__item {
       align-items: center;
       background: var(--color-surface-1);
-      box-shadow: 0 2px 4px 0 rgba(0,0,0,0.02);
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.02);
 
       ._image {
         aspect-ratio: 1;
-        padding: .25rem;
+        padding: 0.25rem;
         border-radius: 4px;
         overflow: clip;
       }
@@ -135,7 +144,7 @@ import CartRemoveItemBtn from "@/components/cart/CartRemoveItemBtn.astro";
 
       ._code {
         color: var(--color-text-secondary);
-        font-size: .75rem;
+        font-size: 0.75rem;
         font-style: italic;
       }
 
@@ -147,9 +156,12 @@ import CartRemoveItemBtn from "@/components/cart/CartRemoveItemBtn.astro";
         justify-self: center;
 
         > :global(button) {
-          opacity: .5;
+          opacity: 0.5;
           color: var(--color-text-secondary);
-          transition: scale .25s, opacity .125s, color .125s;
+          transition:
+            scale 0.25s,
+            opacity 0.125s,
+            color 0.125s;
 
           &:hover {
             opacity: 1;
@@ -178,7 +190,7 @@ import CartRemoveItemBtn from "@/components/cart/CartRemoveItemBtn.astro";
         display: flex;
         align-items: center;
         justify-content: flex-end;
-        gap: .5rem;
+        gap: 0.5rem;
       }
     }
   }

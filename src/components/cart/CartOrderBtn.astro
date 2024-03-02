@@ -6,96 +6,9 @@
   <slot />
 </button>
 
-<dialog x-data="getOrderList()" id="orderDialog" class="orderDialog">
-  <header class="orderDialog__header">
-    <h3>Оформление заказа</h3>
-    <div class="_closeBtn">
-      <button @click="closeOrderDialog()">x</button>
-    </div>
-  </header>
-
-  <div class="orderDialog__formWrap">
-    <form id="contact-form" class="orderDialog__form" x-data="{ orderSubmiting: false }" @submit.prevent="submitOrder">
-      <section class="orderDialog__orderList">
-        <header>Вы заказываете:</header>
-        <div class="_list">
-          <template x-for="product in orderList">
-            <div class="_item">
-              <span class="_itemname" x-text="product.name"></span>
-              <span class="_itemcode" x-text="product.code"></span>
-              <span class="_itemprice" x-text="product.price"></span>
-            </div>
-          </template>
-        </div>
-        <div class="_total">
-          <span class="_totallabel">На сумму</span>
-          <span class="_totalvalue" x-text="orderListTotalPrice"></span>
-        </div>
-      </section>
-
-      <input type="hidden" name="fromOrderList" :value="orderList" />
-
-      <div class="formField +required">
-        <label>Имя</label>
-        <input type="text" name="fromName"/>
-      </div>
-
-      <div class="formField +required">
-        <label>Телефон</label>
-        <input type="tel" name="fromPhone"/>
-      </div>
-
-      <div class="formField">
-        <label>Комментарий</label>
-        <textarea name="fromMessage"></textarea>
-      </div>
-
-      <div class="orderDialog__actions">
-        <button @click="closeOrderDialog()">отмена</button>
-        <button :disabled="orderSubmiting">заказать</button>
-      </div>
-    </form>
-  </div>
-</dialog>
-
 <style lang="scss">
   .cartOrderBtn {
     border: 1px solid var(--color-line);
     font-size: 1rem;
-  }
-</style>
-
-<style lang="scss" is:global>
-  .orderDialog {
-    position: relative;
-    padding: 2rem 3rem;
-
-    &__header {
-      display: flex;
-      justify-content: space-between;
-
-      ._closeBtn {
-        position: absolute;
-        top: 2rem;
-        right: 2rem;
-
-        button {
-          padding: 0;
-          border: 0;
-          transition: scale 0.25s;
-          will-change: scale;
-
-          &:hover {
-            scale: 1.05;
-          }
-        }
-      }
-    }
-
-    &__actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 1rem;
-    }
   }
 </style>

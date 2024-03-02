@@ -1,0 +1,58 @@
+
+
+.formField {
+  display: flex;
+  flex-flow: column;
+  gap: .125rem;
+
+  ._error {
+    visibility: hidden;
+    opacity: 0;
+    translate: 0px -3px;
+    transition: visibility .125s, opacity .125s, translate .125s;
+    transition-delay: 1s;
+    color: red;
+    font-size: .75rem;
+  }
+
+  label {
+    color: var(--color-text-secondary);
+    font-size: .85rem;
+  }
+
+  :where(input, textarea) {
+    padding: 6px;
+    border: 1px solid var(--color-line);
+    border-radius: 5px;
+    font-size: 1.125rem;
+
+    &::placeholder {
+      font-size: 1rem;
+    }
+  }
+
+  input {
+    &:not(:placeholder-shown):invalid {
+      border: 1px solid red;
+
+      + ._error {
+        visibility: visible;
+        opacity: 1;
+        translate: 0px 0px;
+      }
+    }
+  
+    &:not(:placeholder-shown):valid {
+      border: 1px solid green;
+    }
+  }
+  
+  textarea {
+    font-family: inherit;
+    resize: none;
+  }
+
+  :where(input, textarea):focus {
+    outline: none;
+  }
+}
