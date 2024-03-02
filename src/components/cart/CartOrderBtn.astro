@@ -1,14 +1,144 @@
----
+s---
 
 ---
 
-<button class="cartOrderBtn">
-  <slot/>
+<button @click="openOrderDialog()" class="cartOrderBtn">
+  <slot />
 </button>
+
+<dialog x-data="{orderList:''}" id="orderDialog" class="orderDialog">
+  <header class="orderDialog__header">
+    <h3>Оформление заказа</h3>
+    <div class="_closeBtn">
+      <button @click="closeOrderDialog()">x</button>
+    </div>
+  </header>
+  <div class="orderDialog__fields">
+    <div class="formItem">
+      <label for="#orderName">имя</label>
+      <input id="orderName" type="text" />
+    </div>
+
+    <div class="formItem">
+      <label for="#orderPhone">номер телефона</label>
+      <input id="orderPhone" type="tel" />
+    </div>
+
+    <div class="formItem">
+      <label for="#orderComment">комментарий</label>
+      <textarea name="" id="orderComment" cols="30" rows="10"></textarea>
+    </div>
+  </div>
+  <p>
+    ! Заказ будет в виде сообщения на WhatsApp
+  </p>
+
+  <p>
+    <div @click="collectOrder()">Собрать заказ</div>
+    <div x-text="orderList"></div>
+  </p>
+
+  <div class="orderDialog__actions">
+    <button @click="closeOrderDialog()">отмена</button>
+    <span @click="submitOrder()">заказать - DONT CLICK</span>
+  </div>
+</dialog>
 
 <style lang="scss">
   .cartOrderBtn {
     border: 1px solid var(--color-line);
     font-size: 1rem;
+  }
+</style>
+
+<style lang="scss" is:global>
+  .orderDialog {
+    position: relative;
+    padding: 2rem 3rem;
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+
+      ._closeBtn {
+        position: absolute;
+        top: 2rem;
+        right: 2rem;
+
+        button {
+          padding: 0;
+          border: 0;
+          transition: scale 0.25s;
+          will-change: scale;
+
+          &:hover {
+            scale: 1.05;
+          }
+        }
+      }
+    }
+
+    &__actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+    }
+  }
+
+  body:has(dialog[open]) {
+    filter: blur(3px);
+    overflow: clip;
+  }
+
+  dialog[open] {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+
+  dialog {
+    inset: 50%;
+    min-width: 300px;
+    width: clamp(300px, 90vw, 600px);
+    max-width: 600px;
+    border: 1px solid var(--color-line);
+    background: var(--color-surface-1);
+    backdrop-filter: blur(3px);
+    box-shadow:
+      0 2px 4px 0 rgba(0, 0, 0, 0.02),
+      0 6px 20px 0 rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    translate: -50% -50%;
+    transform: translateY(-10%);
+    transition:
+      opacity 0.27s ease-out,
+      transform 0.27s ease-out,
+      overlay 0.27s ease-out allow-discrete,
+      display 0.27s ease-out allow-discrete;
+  }
+
+  @starting-style {
+    dialog[open] {
+      opacity: 0;
+      transform: translateY(-10%);
+    }
+  }
+
+  dialog::backdrop {
+    background-color: rgb(0 0 0 / 0%);
+    filter: blur(13px);
+    transition:
+      display 0.7s allow-discrete,
+      overlay 0.7s allow-discrete,
+      background-color 1.7s;
+  }
+
+  dialog[open]::backdrop {
+    background-color: rgb(0 0 0 / 25%);
+  }
+
+  @starting-style {
+    dialog[open]::backdrop {
+      background-color: rgb(0 0 0 / 0%);
+    }
   }
 </style>

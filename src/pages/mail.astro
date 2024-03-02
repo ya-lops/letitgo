@@ -1,0 +1,53 @@
+---
+import Letitgo from "@/layouts/Letitgo.astro";
+---
+
+<Letitgo>
+  <section>
+    <form id="contact-form">
+      <!-- To simplify the tutorial, the value is static. -->
+      <!-- <input type="hidden" name="contact_number" value="697483" /> -->
+      <label>Имя</label>
+      <input type="text" name="fromName" />
+      <label>Телефон</label>
+      <input type="tel" name="fromPhone" />
+      <label>Комментарий</label>
+      <textarea name="fromMessage"></textarea>
+      <input type="submit" value="Send" />
+    </form>
+  </section>
+
+  <script
+    is:inline
+    type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+  ></script>
+
+  <script is:inline type="text/javascript">
+    (function () {
+      emailjs.init({
+        publicKey: "tT4yuubyXj_gbPRY4",
+      });
+      console.log("mail send init");
+    })();
+  </script>
+
+  <script is:inline type="text/javascript">
+    window.onload = function () {
+      document
+        .getElementById("contact-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          // these IDs from the previous steps
+          emailjs.sendForm("contact_service", "contact_form", this, 'service_72h0drh').then(
+            () => {
+              console.log("SUCCESS!");
+            },
+            (error) => {
+              console.log("FAILED...", error);
+            },
+          );
+        });
+    };
+  </script>
+</Letitgo>

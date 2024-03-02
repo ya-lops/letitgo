@@ -22,13 +22,11 @@ const products = await getCollection("products");
           animation-name: rollinup;
           animation-fill-mode: both;
           animation-timeline: view();
-          // animation-range-start: cover -10%;
           animation-range-end: cover 30%;
 
           &:nth-child(even) {
             transform: translatey(20%);
             animation-name: rollinup-even;
-            // animation-range-start: cover -25%;
             animation-range-end: cover 70%;
           }
 

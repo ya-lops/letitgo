@@ -52,6 +52,8 @@ const {
     count = JSON.parse(sessionStorage.shoppingCartCount || 0);
     Alpine.store("cart", items);
     Alpine.store("count", count);
+    const orderDialog = document.getElementById("orderDialog");
+    orderList = '';
 
     return {
       product() {
@@ -71,6 +73,20 @@ const {
         };
       },
 
+      updateStorage() {
+        sessionStorage.setItem("shoppingCart", JSON.stringify(items));
+        sessionStorage.setItem("shoppingCartCount", count);
+        Alpine.store("cart", items);
+        Alpine.store("count", count);
+      },
+
+      clearStorage() {
+        sessionStorage.setItem("shoppingCart", []);
+        sessionStorage.setItem("shoppingCartCount", 0);
+        Alpine.store("cart", []);
+        Alpine.store("shoppingCartCount", 0);
+      },
+
       toCart() {
         const product = {};
         product.url = this.$el.dataset.url;
@@ -83,29 +99,20 @@ const {
           this.inCart = true;
           items.push(product);
           count = ++count;
-          sessionStorage.setItem("shoppingCart", JSON.stringify(items));
-          sessionStorage.setItem("shoppingCartCount", count);
-          Alpine.store("cart", items);
-          Alpine.store("count", count);
+          this.updateStorage();
         }
       },
 
       removeFromCart(product) {
         items = Alpine.store("cart").filter((e) => e.code !== product.code);
         count = Alpine.store("count") - 1;
-        sessionStorage.setItem("shoppingCart", JSON.stringify(items));
-        sessionStorage.setItem("shoppingCartCount", count);
-        Alpine.store("cart", items);
-        Alpine.store("count", count);
+        this.updateStorage();
         this.products = items;
       },
 
       clearCart() {
         this.products = [];
-        sessionStorage.setItem("shoppingCart", []);
-        sessionStorage.setItem("shoppingCartCount", 0);
-        Alpine.store("cart", []);
-        Alpine.store("shoppingCartCount", 0);
+        this.clearStorage();
       },
 
       getCartCount() {
@@ -114,6 +121,33 @@ const {
 
       getTotalPrice() {
         return this.products.reduce((total, cur) => total + Number(cur.price), 0);
+      },
+
+      openOrderDialog() {
+        orderDialog.showModal();
+        console.log('order dialog opened');
+      },
+
+      closeOrderDialog() {
+        orderDialog.close();
+        this.clearInputs();
+      },
+
+      submitOrder() {
+        orderList = '';
+        for (const item of JSON.parse(sessionStorage.shoppingCart)) {
+          orderList += ` - *${item.name}* (${item.code}, ${item.price}р.) %0a`;
+        }
+        orderMessage = "Здравствуйте, хочу заказать следующее: %0a"
+        orderMessage += orderList;
+        orderHref = "https://wa.me/79265710813?text=" + orderMessage;
+        window.location.href = orderHref;
+        console.log(orderHref);
+      },
+
+      clearInputs() {
+        document.querySelectorAll('input').forEach(input => input.value = '')
+        document.querySelectorAll('textarea').forEach(textarea => textarea.value = '')
       },
     };
   }
